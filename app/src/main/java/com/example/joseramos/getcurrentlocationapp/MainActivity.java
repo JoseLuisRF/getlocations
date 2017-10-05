@@ -11,6 +11,7 @@ import com.example.joseramos.getcurrentlocationapp.location.BaseLocationActivity
 public class MainActivity extends BaseLocationActivity {
 
     private ActivityMainBinding binding;
+    private boolean buttonPressed = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,14 +20,17 @@ public class MainActivity extends BaseLocationActivity {
         binding.btnGetLocations.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (requestingLocationUpdates) {
-                    stopLocationUpdates();
-                } else {
-                    startLocationUpdates();
-                }
-                binding.btnGetLocations.setText(requestingLocationUpdates ?
+                buttonPressed = !buttonPressed;
+
+                binding.btnGetLocations.setText(buttonPressed ?
                         getString(R.string.stop_location_updates) :
                         getString(R.string.start_gps));
+
+                if (buttonPressed) {
+                    startLocationUpdates();
+                } else {
+                    stopLocationUpdates();
+                }
             }
         });
     }
